@@ -33,7 +33,8 @@ first so the same skills and agents are not loaded twice (`/plugin` lists them).
 Then run `/seo setup` once to create the isolated Python runtime and Chromium.
 `/seo doctor` checks readiness at any time.
 
-**Requirements.** Claude Code 1.0.33 or newer and Python 3.11 to 3.14. Node.js 18+
+**Requirements.** Claude Code 1.0.33 or newer and Python 3.11 to 3.14. On Windows, set
+`PYTHONUTF8=1` before using the blog campaign tools, whose files are UTF-8 Chinese text. Node.js 18+
 for the writer audit and Cloudflare R2 upload scripts. The blog campaign release
 builder needs `markdown-it-py==3.0.0`
 (`skills/blog-human-handoff/scripts/requirements.txt`).

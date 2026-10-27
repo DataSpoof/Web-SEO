@@ -6,7 +6,7 @@ argument-hint: "[command] [url]"
 license: MIT
 metadata:
   author: AgriciDaniel; link-building and writing workflows by Flaq AI
-  version: "2.5.0+backlink-skills"
+  version: "2.5.0"
   category: seo
 ---
 

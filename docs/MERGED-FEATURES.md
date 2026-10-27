@@ -50,7 +50,10 @@ Each directory-submission skill keeps its own `tests/` folder.
 The blog campaign's internal references are reached through their tool folders:
 `skills/blog-human-handoff/references/local-seo-issues.md`,
 `skills/blog-human-handoff/references/platform-release-observations.md` and its
-companion `platform-release-observations.test.md`.
+companion `platform-release-observations.test.md`; the legacy harness contract
+`skills/blog-harness/references/campaign-contract.md` and checklist
+`skills/blog-harness/references/pre-clearance.md`; and the legacy editorial note
+`skills/blog-writer-merged/references/cross-language-seo.md`.
 
 Not imported (repository chrome, not features): the 18 translated READMEs, the
 hero and star-growth images, and `scripts/update-star-growth-chart.mjs`.

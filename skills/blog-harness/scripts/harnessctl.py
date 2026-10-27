@@ -9,6 +9,7 @@ import hashlib
 import importlib.util
 from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -2096,7 +2097,8 @@ def relative_path(workspace: Path, path: Path) -> str:
     resolved = path.resolve()
     if resolved == root or root not in resolved.parents:
         raise ValueError(f"path must stay inside workspace: {path}")
-    return str(resolved.relative_to(root))
+    # POSIX form on every OS: records and prefix checks use '/' separators.
+    return resolved.relative_to(root).as_posix()
 
 
 def article_id_is_safe_path_component(article_id: object) -> bool:
@@ -5300,7 +5302,8 @@ def review_ready_errors(
             "--article-package", str(package_path),
             "--title-transfer-mode", str(title_transfer_mode),
         ],
-        text=True, capture_output=True, check=False,
+        text=True, capture_output=True, check=False, encoding="utf-8", errors="replace",
+        env={**os.environ, "PYTHONIOENCODING": "utf-8"},
     )
     if result.returncode != 0:
         detail = (result.stdout or result.stderr).strip().replace("\n", "; ")

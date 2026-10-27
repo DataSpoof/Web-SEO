@@ -105,7 +105,8 @@ def check_research_refs(files, texts):
     pat = re.compile(r'research/([A-Za-z0-9_\-]+\.md)')
     errors = []
     for f in texts:
-        if f in SELF_DOC:
+        if f in SELF_DOC or f.startswith(IMPORTED_DIRS + IMPORTED_TESTS):
+            # Imported blog-campaign code uses research/ for campaign workspaces.
             continue
         for m in sorted(set(pat.findall(read(f)))):
             if not os.path.exists(os.path.join(REPO, "research", m)):

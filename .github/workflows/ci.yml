@@ -123,6 +123,9 @@ jobs:
         # Windows via os.name; everything else must hold on every platform.
         env:
           CLAUDE_SEO_NETWORK_TESTS: "1"
+          # The imported blog-workflow tests read UTF-8 files with the default
+          # encoding; UTF-8 mode makes that default UTF-8 on Windows too.
+          PYTHONUTF8: "1"
           GH_TOKEN: ${{ github.token }}
         run: pytest tests/ skills/ -v
 
