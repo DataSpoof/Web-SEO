@@ -1,162 +1,298 @@
-# Web-SEO: SEO Analysis + Link Building for Claude Code
+<p align="center">
+  <img src="assets/web-seo/banner.svg" alt="Web-SEO: audit, build links, write and govern SEO work in one Claude Code plugin" width="100%">
+</p>
 
-One Claude Code plugin that combines every feature of two open-source projects:
+<p align="center">
+  <a href="https://github.com/DataSpoof/Web-SEO/actions/workflows/ci.yml"><img src="https://github.com/DataSpoof/Web-SEO/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/Claude_Code-plugin-d97757?logo=anthropic&logoColor=white" alt="Claude Code plugin">
+  <img src="https://img.shields.io/badge/skills-46-2563eb" alt="46 skills">
+  <img src="https://img.shields.io/badge/agents-19-7c3aed" alt="19 agents">
+  <img src="https://img.shields.io/badge/python-3.11%20to%203.14-3776ab?logo=python&logoColor=white" alt="Python 3.11 to 3.14">
+  <a href="licenses/"><img src="https://img.shields.io/badge/license-MIT-16a34a" alt="MIT license"></a>
+</p>
 
-- **[claude-seo](https://github.com/AgriciDaniel/claude-seo)** by AgriciDaniel (v2.5.0):
-  full-site audits, technical SEO, content and E-E-A-T, schema, sitemaps, images,
-  Core Web Vitals, local SEO and maps, GEO / AI search, agent readiness, backlink
-  profile analysis, clustering, SXO, drift monitoring, e-commerce, hreflang, Google
-  APIs, the FLOW framework, and 9 optional MCP extensions.
-- **[backlink_skills](https://github.com/flaqai/backlink_skills)** by Flaq AI:
-  the dual-track backlink prospecting matrix, product-directory submission (batch,
-  quality, merged), the SEO article writer, LinkedIn / Medium / WeChat writers, the
-  scalable multi-platform blog campaign workflow, and the 743-entry public backlink
-  candidate list.
+<p align="center">
+  <b>The complete SEO toolkit for Claude Code.</b><br>
+  Run a full-site audit, turn competitor gaps into a backlink plan, write platform-native articles,<br>
+  and manage it all across clients with approvals, budgets and an audit trail.
+</p>
 
-In total: **46 sub-skills** (26 from claude-seo, 15 from backlink_skills, 5 enterprise
-operations skills) and **19 sub-agents**, all reachable from one `/seo` entry point.
+<p align="center">
+  <a href="#-quick-start">Quick start</a> &nbsp;•&nbsp;
+  <a href="#-whats-inside">What's inside</a> &nbsp;•&nbsp;
+  <a href="#-commands">Commands</a> &nbsp;•&nbsp;
+  <a href="#-how-it-fits-together">Workflow</a> &nbsp;•&nbsp;
+  <a href="#-built-for-teams">For teams</a> &nbsp;•&nbsp;
+  <a href="#-safety-first">Safety</a>
+</p>
 
-## Install
+---
 
-Add this repository as a plugin marketplace, then install:
+## ✨ Why Web-SEO
+
+Most SEO tooling stops at the report. Web-SEO keeps going: it finds what is wrong,
+plans the links, writes the content, and turns findings into tickets your team can
+track, without ever submitting, emailing or publishing anything you did not approve.
+
+It brings together two proven open-source projects and adds an enterprise layer:
+
+| | Source | What it brings |
+|---|---|---|
+| 🔍 | **[claude-seo](https://github.com/AgriciDaniel/claude-seo)** by AgriciDaniel | Audits, technical SEO, E-E-A-T, schema, Core Web Vitals, local and maps, AI search (GEO), agent readiness, backlink analysis, clustering, drift monitoring, Google APIs |
+| 🔗 | **[backlink_skills](https://github.com/flaqai/backlink_skills)** by Flaq AI | Backlink prospecting matrix, product-directory submission, SEO / LinkedIn / Medium / WeChat writers, multi-platform blog campaigns, 743 link leads |
+| 🏢 | **Enterprise layer** (new here) | Client workspaces, approval ledger, budget caps, audit log, Jira / Linear / GitHub / Slack exports, portfolio reports, scheduled monitoring |
+
+**46 sub-skills and 19 sub-agents**, all reachable from a single `/seo` command.
+
+## 🚀 Quick start
+
+**1. Add the marketplace and install** (inside Claude Code):
 
 ```
 /plugin marketplace add DataSpoof/Web-SEO
 /plugin install web-seo@web-seo-local
 ```
 
-From a local clone, pass the folder path instead: `/plugin marketplace add ./Web-SEO`.
+**2. Set up the runtime once** (an isolated Python environment plus headless Chromium):
 
-If the original `claude-seo` plugin is already installed, disable or uninstall it
-first so the same skills and agents are not loaded twice (`/plugin` lists them).
+```
+/seo setup
+```
 
-Then run `/seo setup` once to create the isolated Python runtime and Chromium.
-`/seo doctor` checks readiness at any time.
+**3. Run your first audit:**
 
-**Requirements.** Claude Code 1.0.33 or newer and Python 3.11 to 3.14. On Windows, set
-`PYTHONUTF8=1` before using the blog campaign tools, whose files are UTF-8 Chinese text. Node.js 18+
-for the writer audit and Cloudflare R2 upload scripts. The blog campaign release
-builder needs `markdown-it-py==3.0.0`
-(`skills/blog-human-handoff/scripts/requirements.txt`).
+```
+/seo audit https://your-site.com
+```
 
-Do not use `install.sh` / `install.ps1` for this merged plugin: those upstream
-manual installers download claude-seo from GitHub and would not include the
-link-building skills.
+That's it. `/seo doctor` checks readiness at any time.
 
-## What you can do
+<details>
+<summary><b>Requirements and install notes</b></summary>
 
-### SEO analysis (claude-seo)
+- Claude Code 1.0.33 or newer, and Python 3.11 to 3.14.
+- Node.js 18+ for the writer audit scripts and the optional Cloudflare R2 image upload.
+- The blog campaign release builder needs `markdown-it-py==3.0.0`
+  (`skills/blog-human-handoff/scripts/requirements.txt`).
+- On Windows, set `PYTHONUTF8=1` before using the blog campaign tools; their files
+  are UTF-8 Chinese text.
+- Installing from a local clone works too: `/plugin marketplace add ./Web-SEO`.
+- Already have the original `claude-seo` plugin? Disable it in `/plugin` so the
+  shared skills are not loaded twice.
+- Do not use the bundled `install.sh` / `install.ps1`: those upstream manual
+  installers download claude-seo only, without the link-building and enterprise skills.
+
+</details>
+
+## 🧰 What's inside
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🔍 Analyze
+- Full-site audit, 0-100 health score
+- Technical SEO in 9 categories
+- E-E-A-T and content quality
+- Schema.org detect / validate / generate
+- Core Web Vitals (INP) and PageSpeed
+- Local SEO, GBP, geo-grid maps
+- AI Overviews, ChatGPT, Perplexity (GEO)
+- Agent readiness, llms.txt, WebMCP
+- Backlink profile and toxic links
+- Drift monitoring after deploys
+- E-commerce, hreflang, SXO
+
+</td>
+<td width="33%" valign="top">
+
+### 🔗 Build and write
+- Dual-track backlink prospecting
+- Semrush and competitor-gap sources
+- Free / Paid execution workbooks
+- Directory submission: batch, quality, merged
+- 743-entry backlink candidate list
+- SEO articles with fact-check and audit
+- LinkedIn, Medium, WeChat writers
+- Multi-platform blog campaigns with
+  independent review
+- Content briefs and topic clusters
+
+</td>
+<td width="33%" valign="top">
+
+### 🏢 Operate
+- One workspace per client
+- Org policy: allow, approve or deny
+- Approval ledger with expiry and counts
+- Monthly and per-run budget caps
+- Tamper-evident audit log
+- Jira, Linear, GitHub Issues exports
+- Slack and Teams summaries
+- Run-to-run regression diffs
+- White-label portfolio reports
+- Scheduled audits in CI or cron
+
+</td>
+</tr>
+</table>
+
+## 📋 Commands
+
+<details open>
+<summary><b>🔍 SEO analysis</b></summary>
 
 | Command | What it does |
-|---------|-------------|
-| `/seo audit <url>` | Full website audit with parallel subagents and a 0-100 SEO Health Score |
+|---|---|
+| `/seo audit <url>` | Full website audit with parallel agents and an SEO Health Score |
 | `/seo page <url>` | Deep single-page analysis |
-| `/seo technical <url>` | Technical SEO across 9 categories |
-| `/seo content <url>` | E-E-A-T and content quality |
-| `/seo content-brief <topic>` | Content brief: keywords, outline, internal links |
-| `/seo schema <url>` | Schema.org detection, validation, generation |
-| `/seo sitemap <url or generate>` | Sitemap validation or generation |
-| `/seo images <url>` | Image SEO |
-| `/seo geo <url>` | AI Overviews / ChatGPT / Perplexity optimization |
-| `/seo agentic <url>` | Agent readiness: Lighthouse Agentic Browsing, llms.txt, WebMCP |
-| `/seo local <url>` / `/seo maps` | Local SEO, GBP, citations, geo-grid |
-| `/seo backlinks <url>` | Backlink profile (Moz, Bing, Common Crawl, DataForSEO) |
-| `/seo cluster <seed>` | SERP-overlap topic clustering |
-| `/seo sxo <url>` | Search Experience Optimization |
-| `/seo drift baseline\|compare\|history <url>` | SEO regression monitoring |
+| `/seo technical <url>` | Crawlability, indexability, security, rendering, Core Web Vitals |
+| `/seo content <url>` | E-E-A-T, readability, thin content, AI citation readiness |
+| `/seo content-brief <topic>` | Competitive brief: keywords, outline, word counts, internal links |
+| `/seo schema <url>` | Structured data detection, validation and generation |
+| `/seo sitemap <url or generate>` | Validate or generate XML sitemaps |
+| `/seo images <url>` | Alt text, formats, sizes, lazy loading, image SERP |
+| `/seo geo <url>` | Optimize for AI Overviews and answer engines |
+| `/seo agentic <url>` | Lighthouse Agentic Browsing, AI agent access, WebMCP |
+| `/seo local <url>` · `/seo maps` | GBP, NAP, citations, reviews, geo-grid rank tracking |
+| `/seo backlinks <url>` | Profile from Moz, Bing, Common Crawl and DataForSEO |
+| `/seo cluster <seed>` | SERP-overlap clustering and hub-and-spoke architecture |
+| `/seo sxo <url>` | Page-type mismatch, user stories, persona scoring |
+| `/seo drift baseline\|compare\|history <url>` | Catch SEO regressions after changes |
 | `/seo ecommerce <url>` | Product schema, Shopping and marketplace intelligence |
-| `/seo hreflang [url]` | International SEO |
-| `/seo plan <type>` | Strategic plan by industry |
-| `/seo programmatic` / `/seo competitor-pages` | Programmatic SEO and comparison pages |
-| `/seo flow [stage]` | FLOW framework prompts |
+| `/seo hreflang [url]` | International SEO and cultural adaptation |
+| `/seo plan <type>` | Strategy by industry: SaaS, local, e-commerce, publisher, agency |
+| `/seo programmatic` · `/seo competitor-pages` | Pages at scale and "X vs Y" comparisons |
+| `/seo flow [stage]` | FLOW framework prompts: Find, Leverage, Optimize, Win |
 | `/seo google [command]` | Search Console, PageSpeed, CrUX, GA4, Indexing API, PDF reports |
-| `/seo dataforseo`, `/seo image-gen`, `/seo firecrawl`, `/seo ahrefs`, `/seo bing`, `/seo matomo`, `/seo profound`, `/seo seranking`, `/seo unlighthouse` | Optional extensions (see `extensions/`) |
 
-### Link building and writing (backlink_skills)
+Optional MCP extensions: `/seo dataforseo`, `/seo image-gen`, `/seo firecrawl`,
+`/seo ahrefs`, `/seo bing`, `/seo matomo`, `/seo profound`, `/seo seranking`,
+`/seo unlighthouse` (see [`extensions/`](extensions/)).
 
-| Command | Skill(s) | What it does |
-|---------|----------|-------------|
-| `/seo backlink-matrix` | `backlink-expansion-matrix` + 4 stage skills | Semrush / competitor sources, batch and editorial tracks, dedup, frozen batches, Free/Paid workbooks with QA |
-| `/seo submit-directories quality` | `submit-product-directories-v2-quality` | Quality-first pilots of at most 10 directories with an SEO quality gate |
-| `/seo submit-directories batch` | `submit-product-directories-v1-batch` | Large prequalified lists: normalize, dedup, shard, resumable queue |
-| `/seo submit-directories merged` | `submit-product-directories-merged` | Directory forms plus one-to-one official Contact emails |
-| `/seo backlink-list` | data | The 743-entry candidate list in `data/free-backlink-list.md` |
-| `/seo write general\|linkedin\|medium\|wechat` | `writer`, `linkedin-writer`, `medium-writer`, `wechat-writer` | Fact-checked, audited, humanized articles and publishing packs |
-| `/seo blog-campaign` | `blog-gate`, `blog-writer`, `blog-review` | Multi-article, multi-platform campaign with independent review and human release |
+</details>
 
-### Enterprise operations
+<details open>
+<summary><b>🔗 Link building and writing</b></summary>
 
 | Command | What it does |
-|---------|-------------|
-| `/seo workspace` | One isolated folder per client: profile, audits, reports, backlinks, content, exports |
-| `/seo governance` | Org policy (allow / approval / deny), per-client approval ledger, budget caps, audit log, retention |
-| `/seo export` | Findings to Jira, Linear, GitHub Issues, CSV, Markdown, Slack, Teams; run-to-run diffs |
-| `/seo portfolio` | Multi-site roll-up with risk ranking and a white-label HTML executive summary |
-| `/seo schedule` | Recurring audits, drift checks and roll-ups for GitHub Actions, cron, Task Scheduler |
+|---|---|
+| `/seo backlink-matrix` | Source prep, batch and editorial tracks, dedup, frozen batches, Free/Paid workbooks |
+| `/seo submit-directories quality` | Quality-first pilot of up to 10 relevant directories |
+| `/seo submit-directories batch` | High-throughput queue for large prequalified lists |
+| `/seo submit-directories merged` | Directory forms plus one-to-one official contact requests |
+| `/seo backlink-list` | Browse the 743-entry candidate list (recheck before use) |
+| `/seo write general\|linkedin\|medium\|wechat` | Fact-checked, audited, humanized articles and publishing packs |
+| `/seo blog-campaign` | Multi-article campaign: gatekeeper, writer, independent reviewer |
 
-Two hooks ship with it: a **secret guard** that blocks writing live-looking API keys
-into files, and an opt-in **audit hook** that records tool activity in a
-hash-chained log. `enterprise/` holds JSON schemas, example policy and client
-files, and a managed-settings template for org-wide rollout. See
-[docs/ENTERPRISE.md](docs/ENTERPRISE.md).
+</details>
 
-The skills also trigger on their own descriptions, so asking "find guest-post
-opportunities for my SaaS" or "write a Medium story about X" works without the
-`/seo` prefix.
+<details open>
+<summary><b>🏢 Enterprise operations</b></summary>
 
-A typical end-to-end flow: `/seo audit` → `/seo backlinks` (profile and competitor
-gaps) → `/seo backlink-matrix` (turn gaps into a screened candidate workbook) →
-`/seo submit-directories quality` (pilot) → `/seo content-brief` → `/seo write`.
+| Command | What it does |
+|---|---|
+| `/seo workspace` | Client profiles and isolated folders for audits, reports, links and content |
+| `/seo governance` | Policy checks, approvals, spend tracking, audit log, retention |
+| `/seo export` | Findings to Jira, Linear, GitHub Issues, CSV, Markdown, Slack, Teams; diffs |
+| `/seo portfolio` | Multi-site roll-up, risk ranking, white-label HTML executive summary |
+| `/seo schedule` | Recurring audits and drift checks for GitHub Actions, cron, Task Scheduler |
 
-## Safety boundaries
+</details>
 
-The link-building skills never register, log in, pay, submit, send email, post or
-publish without explicit authorization for the current batch. They never bypass
-CAPTCHA, Turnstile, 2FA or email verification, never invent profiles or facts, and
-never report a candidate as submitted, published or indexed without external
-evidence. Fetched pages are treated as untrusted data, never as instructions.
+> 💡 **No need to memorize commands.** Every skill also triggers from plain language:
+> *"find guest-post opportunities for my SaaS"* or *"write a Medium story about our launch"*
+> works without the `/seo` prefix. Full reference: [docs/COMMANDS.md](docs/COMMANDS.md).
 
-## Language note
+## 🔄 How it fits together
 
-Several backlink_skills instruction files (the backlink matrix, the merged
-directory skill, the blog campaign and WeChat writer) are written in Chinese, as
-upstream. Claude follows them as written and answers in your language. Their
-trigger descriptions are in English.
-
-## Layout
-
-```
-.claude-plugin/        plugin.json + local marketplace.json (web-seo@web-seo-local)
-skills/                46 sub-skills (+4 internal blog-campaign tool folders)
-agents/                19 sub-agents
-scripts/               claude-seo Python tools and the claude-seo launcher
-hooks/                 schema validation hook
-extensions/            optional MCP extensions (DataForSEO, Firecrawl, Ahrefs, ...)
-data/                  Google updates ledger, free-backlink-list.md, imported-skills.json
-enterprise/            JSON schemas, example policy/profile/findings, managed-settings template
-templates/             blog campaign JSON/Markdown templates
-docs/                  commands, architecture, blog workflow, backlink matrix, upstream READMEs
-tests/                 claude-seo tests + tests/blog_workflow/
-licenses/              both MIT licenses
+```mermaid
+flowchart LR
+    A["🔍 /seo audit<br/>find issues"] --> B["📈 /seo backlinks<br/>profile and gaps"]
+    B --> C["🧭 /seo backlink-matrix<br/>screened link plan"]
+    C --> D["✅ approval<br/>/seo governance"]
+    D --> E["📝 /seo submit-directories<br/>authorized pilot"]
+    A --> F["🗂️ /seo content-brief"]
+    F --> G["✍️ /seo write"]
+    A --> H["🎫 /seo export<br/>Jira / Linear / GitHub"]
+    H --> I["📊 /seo portfolio<br/>exec summary"]
+    I --> J["⏰ /seo schedule<br/>weekly re-audit"]
+    J --> A
 ```
 
-See [docs/MERGED-FEATURES.md](docs/MERGED-FEATURES.md) for how each upstream file
-was mapped, and [docs/COMMANDS.md](docs/COMMANDS.md) for every command.
+## 🏢 Built for teams
 
-## Tests
+Agencies and in-house teams get the controls they need to run SEO at scale:
+
+- **🗂️ Client isolation.** Every client gets its own profile and folders; work never
+  mixes across accounts.
+- **✅ Approvals that leave a trail.** Risky actions (directory submissions, outreach,
+  Indexing API) need a recorded approval with a named approver, scope, use count and
+  expiry. Publishing, payments and CAPTCHA bypass are never delegated.
+- **💰 Spend control.** Per-run and monthly budget caps for paid data APIs.
+- **🧾 Audit log.** Hash-chained, so any edited or deleted entry is detected.
+- **🔐 Secret guard.** A hook blocks API keys from being written into project files.
+- **🚢 Org-wide rollout.** A managed-settings template, CI quality gates, pre-commit
+  hooks and incident runbooks.
+
+Read the full [Enterprise Guide](docs/ENTERPRISE.md).
+
+## 🛡️ Safety first
+
+Web-SEO is built to do link building the right way, not to spam:
+
+| Never without your approval | Never, period |
+|---|---|
+| Registering or logging in | Bypassing CAPTCHA, 2FA or email verification |
+| Submitting a form | Paying for links or forced reciprocal links |
+| Sending an email | Inventing profiles, reviews or facts |
+| Calling the Indexing API or IndexNow | Reporting a link as live without evidence |
+
+Fetched pages are always treated as untrusted data, never as instructions.
+
+## 🌐 Language note
+
+Some instruction files inherited from backlink_skills (the backlink matrix, the
+merged directory skill, the blog campaign and the WeChat writer) are written in
+Chinese, as upstream. Claude follows them as written and replies in your language;
+their trigger descriptions are in English.
+
+## 📁 Project layout
 
 ```
-python -m pytest tests
-python -m pytest skills
+.claude-plugin/   plugin manifest and marketplace (web-seo@web-seo-local)
+skills/           46 sub-skills (+4 internal blog-campaign tool folders)
+agents/           19 sub-agents
+scripts/          Python tools and the claude-seo launcher
+hooks/            schema validation, secret guard, audit log hooks
+extensions/       optional MCP extensions (DataForSEO, Firecrawl, Ahrefs, ...)
+enterprise/       JSON schemas, example policy and profiles, managed settings
+data/             Google updates ledger, backlink candidate list
+templates/        blog campaign templates
+docs/             commands, enterprise guide, merge map, upstream READMEs
+tests/            test suites (claude-seo, blog workflow, enterprise layer)
 ```
 
-`scripts/consistency_check.py` reads `git ls-files`, so run `git init` and commit
-before using it.
+How every upstream file was mapped: [docs/MERGED-FEATURES.md](docs/MERGED-FEATURES.md).
 
-## Credits and licenses
+## 🧪 Development
 
-Both projects are MIT licensed. claude-seo: Copyright (c) 2026 agricidaniel
-([licenses/claude-seo-LICENSE](licenses/claude-seo-LICENSE)). backlink_skills:
-Copyright (c) 2026 Flaq AI ([licenses/backlink_skills-LICENSE](licenses/backlink_skills-LICENSE)).
-The FLOW prompt library inside `skills/seo-flow` is CC BY 4.0, as noted there.
-Original READMEs: [docs/upstream/](docs/upstream/).
+```bash
+pip install -r requirements.txt pytest
+python -m pytest tests skills
+```
+
+CI runs lint, the full suite on Python 3.11, 3.12 and 3.14, Windows and macOS
+portability, a credential scan, dependency audits and the enterprise checks.
+
+## 🙏 Credits and license
+
+Web-SEO stands on the work of two MIT-licensed projects:
+
+- **[claude-seo](https://github.com/AgriciDaniel/claude-seo)**, Copyright (c) 2026 agricidaniel ([license](licenses/claude-seo-LICENSE))
+- **[backlink_skills](https://github.com/flaqai/backlink_skills)**, Copyright (c) 2026 Flaq AI ([license](licenses/backlink_skills-LICENSE))
+
+The FLOW prompt library in `skills/seo-flow` is CC BY 4.0. Original READMEs are kept in
+[docs/upstream/](docs/upstream/).
+
+<p align="center"><sub>If Web-SEO helps you, a ⭐ on the repo helps others find it.</sub></p>

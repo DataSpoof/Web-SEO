@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-labelledby="t d">
+  <title id="t">Web-SEO for Claude Code</title>
+  <desc id="d">SEO analysis, link building and enterprise operations in one Claude Code plugin: 46 skills, 19 agents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1730"/>
+      <stop offset="0.55" stop-color="#13294f"/>
+      <stop offset="1" stop-color="#1d3f73"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="400" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="400" rx="20" fill="url(#grid)"/>
+  <rect width="1280" height="400" rx="20" fill="url(#glow)"/>
+
+  <!-- link graph motif -->
+  <g stroke="#7dd3fc" stroke-opacity="0.45" stroke-width="2" fill="none">
+    <path d="M930 110 L1050 170 L1160 105"/>
+    <path d="M1050 170 L1010 280 L1150 300"/>
+    <path d="M1050 170 L1160 105 L1150 300"/>
+    <path d="M930 110 L1010 280"/>
+  </g>
+  <g fill="#0b1730" stroke-width="3">
+    <circle cx="930" cy="110" r="14" stroke="#38bdf8"/>
+    <circle cx="1050" cy="170" r="22" stroke="url(#accent)"/>
+    <circle cx="1160" cy="105" r="12" stroke="#a78bfa"/>
+    <circle cx="1010" cy="280" r="16" stroke="#38bdf8"/>
+    <circle cx="1150" cy="300" r="13" stroke="#a78bfa"/>
+  </g>
+  <circle cx="1050" cy="170" r="8" fill="url(#accent)"/>
+
+  <!-- wordmark -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="72" y="150" font-size="84" font-weight="800" fill="#ffffff" letter-spacing="-2">Web<tspan fill="url(#accent)">-SEO</tspan></text>
+    <text x="76" y="200" font-size="28" font-weight="500" fill="#cbd5e1">Audit. Build links. Write. Govern. One Claude Code plugin.</text>
+
+    <!-- stat pills -->
+    <g font-size="20" font-weight="600">
+      <rect x="76" y="250" width="150" height="46" rx="23" fill="#ffffff" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.6"/>
+      <text x="151" y="280" text-anchor="middle" fill="#e0f2fe">46 skills</text>
+      <rect x="242" y="250" width="150" height="46" rx="23" fill="#ffffff" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.6"/>
+      <text x="317" y="280" text-anchor="middle" fill="#e0f2fe">19 agents</text>
+      <rect x="408" y="250" width="200" height="46" rx="23" fill="#ffffff" fill-opacity="0.08" stroke="#a78bfa" stroke-opacity="0.6"/>
+      <text x="508" y="280" text-anchor="middle" fill="#ede9fe">9 MCP add-ons</text>
+      <rect x="624" y="250" width="190" height="46" rx="23" fill="#ffffff" fill-opacity="0.08" stroke="#a78bfa" stroke-opacity="0.6"/>
+      <text x="719" y="280" text-anchor="middle" fill="#ede9fe">743 link leads</text>
+    </g>
+    <text x="76" y="350" font-size="17" fill="#94a3b8">claude-seo + backlink_skills + enterprise layer  |  MIT licensed</text>
+  </g>
+</svg>
