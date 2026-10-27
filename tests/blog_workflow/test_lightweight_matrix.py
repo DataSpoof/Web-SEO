@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from tests.blog_workflow.test_lean_authoring import png
+from test_lean_authoring import png
 
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "skills/blog-writer/scripts/build_release.py"

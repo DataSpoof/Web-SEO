@@ -17,6 +17,18 @@ Repository = "https://github.com/AgriciDaniel/claude-seo"
 [tool.ruff]
 target-version = "py311"
 line-length = 100
+# Code merged from flaqai/backlink_skills keeps its upstream style (see
+# data/imported-skills.json); lint covers claude-seo and the enterprise layer.
+extend-exclude = [
+    "skills/backlink-*",
+    "skills/blog-*",
+    "skills/submit-product-directories-*",
+    "skills/writer",
+    "skills/linkedin-writer",
+    "skills/medium-writer",
+    "skills/wechat-writer",
+    "tests/blog_workflow",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]

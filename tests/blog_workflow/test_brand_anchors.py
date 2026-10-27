@@ -4,7 +4,7 @@ import importlib.util
 from pathlib import Path
 import unittest
 
-from tests.blog_workflow import test_lightweight_matrix as fixture
+import test_lightweight_matrix as fixture
 
 
 ROOT = Path(__file__).resolve().parents[2]
