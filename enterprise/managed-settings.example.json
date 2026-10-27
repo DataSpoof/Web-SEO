@@ -1,0 +1,38 @@
+{
+  "extraKnownMarketplaces": {
+    "web-seo-local": {
+      "source": {
+        "source": "github",
+        "repo": "DataSpoof/Web-SEO"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "web-seo@web-seo-local": true
+  },
+  "env": {
+    "WEB_SEO_AUDIT": "1"
+  },
+  "disableBypassPermissionsMode": "disable",
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/client_secret*.json)",
+      "Read(**/service_account*.json)",
+      "Read(**/oauth-token.json)",
+      "Read(**/r2.config.json)",
+      "Read(~/.config/claude-seo/**)"
+    ],
+    "ask": [
+      "mcp__dataforseo",
+      "mcp__ahrefs",
+      "mcp__seranking",
+      "mcp__profound",
+      "mcp__firecrawl",
+      "Bash(git push:*)",
+      "Bash(gh issue create:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web-seo.local/schemas/org-policy.schema.json",
+  "title": "Web-SEO organization policy",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "actions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "org_name": {
+      "type": "string"
+    },
+    "actions": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "read_only_analysis",
+          "paid_api_call",
+          "google_api_write",
+          "indexnow_submit",
+          "account_registration",
+          "account_login",
+          "directory_submission",
+          "outreach_email",
+          "image_host_upload",
+          "file_write_client_site",
+          "content_publish",
+          "payment",
+          "reciprocal_link",
+          "captcha_bypass",
+          "mass_outreach"
+        ]
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "allow",
+              "require_approval",
+              "deny"
+            ]
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "properties": {
+        "per_run_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "monthly_usd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "properties": {
+        "max_validity_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 365
+        },
+        "require_known_approver": {
+          "type": "boolean"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "retention_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "store_raw_html": {
+          "type": "boolean"
+        },
+        "redact_pii_in_logs": {
+          "type": "boolean"
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "prohibited_tactics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

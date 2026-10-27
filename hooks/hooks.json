@@ -1,0 +1,51 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/run-python-hook.js",
+              "${CLAUDE_PLUGIN_ROOT}/hooks/validate-schema.py",
+              "${tool_input.file_path}"
+            ],
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Write|Edit|MultiEdit|NotebookEdit|WebFetch|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/run-python-hook.js",
+              "${CLAUDE_PLUGIN_ROOT}/hooks/audit_hook.py"
+            ],
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/run-python-hook.js",
+              "${CLAUDE_PLUGIN_ROOT}/hooks/secret_guard.py"
+            ],
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

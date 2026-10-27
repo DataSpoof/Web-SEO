@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "org_name": "Example Agency",
+  "actions": {
+    "read_only_analysis": {
+      "mode": "allow"
+    },
+    "paid_api_call": {
+      "mode": "allow"
+    },
+    "google_api_write": {
+      "mode": "require_approval"
+    },
+    "indexnow_submit": {
+      "mode": "require_approval"
+    },
+    "account_registration": {
+      "mode": "require_approval"
+    },
+    "account_login": {
+      "mode": "require_approval"
+    },
+    "directory_submission": {
+      "mode": "require_approval"
+    },
+    "outreach_email": {
+      "mode": "require_approval"
+    },
+    "image_host_upload": {
+      "mode": "require_approval"
+    },
+    "file_write_client_site": {
+      "mode": "require_approval"
+    },
+    "content_publish": {
+      "mode": "deny"
+    },
+    "payment": {
+      "mode": "deny"
+    },
+    "reciprocal_link": {
+      "mode": "deny"
+    },
+    "captcha_bypass": {
+      "mode": "deny"
+    },
+    "mass_outreach": {
+      "mode": "deny"
+    }
+  },
+  "budgets": {
+    "per_run_usd": 10.0,
+    "monthly_usd": 200.0
+  },
+  "approvals": {
+    "max_validity_days": 30,
+    "require_known_approver": true
+  },
+  "data": {
+    "retention_days": 365,
+    "store_raw_html": false,
+    "redact_pii_in_logs": true
+  },
+  "audit": {
+    "enabled": true
+  },
+  "prohibited_tactics": [
+    "link schemes or paid links that pass ranking signals",
+    "invented personas, reviews, credentials or facts",
+    "doorway or scaled low-value pages",
+    "cloaking or sneaky redirects",
+    "bypassing site rate limits, robots.txt or terms of service"
+  ]
+}

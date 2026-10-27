@@ -1,0 +1,101 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "web-seo-local",
+  "owner": {
+    "name": "DataSpoof"
+  },
+  "metadata": {
+    "description": "All-in-one SEO, link-building and enterprise operations plugin for Claude Code, merging claude-seo and backlink_skills. 46 sub-skills (27 core + 1 orchestrator + 1 framework + 2 extension mirrors + 15 link-building) and 19 sub-agents: audits, technical SEO, content, schema, local, GEO, backlinks, prospecting, directory submission, writing, plus client workspaces, approvals, audit log, exports and portfolio reporting. Includes 9 optional MCP extensions and the optional seo-cockpit companion."
+  },
+  "plugins": [
+    {
+      "name": "web-seo",
+      "source": "./",
+      "description": "All-in-one SEO, link-building and enterprise operations plugin for Claude Code, merging claude-seo and backlink_skills. 46 sub-skills (27 core + 1 orchestrator + 1 framework + 2 extension mirrors + 15 link-building) and 19 sub-agents: audits, technical SEO, content, schema, local, GEO, backlinks, prospecting, directory submission, writing, plus client workspaces, approvals, audit log, exports and portfolio reporting.",
+      "author": {
+        "name": "AgriciDaniel and Flaq AI (merged)",
+        "url": "https://github.com/AgriciDaniel/claude-seo"
+      },
+      "category": "marketing",
+      "homepage": "https://claude-seo.md",
+      "keywords": [
+        "seo",
+        "technical-seo",
+        "content-quality",
+        "e-e-a-t",
+        "schema-markup",
+        "core-web-vitals",
+        "local-seo",
+        "geo",
+        "ai-search",
+        "sitemap",
+        "image-optimization",
+        "image-serp",
+        "google-images",
+        "hreflang",
+        "google-search-console",
+        "pagespeed",
+        "crux",
+        "ga4",
+        "backlinks",
+        "moz",
+        "bing-webmaster",
+        "common-crawl",
+        "backlink-verification",
+        "semantic-clustering",
+        "topic-clusters",
+        "sxo",
+        "search-experience",
+        "drift-monitoring",
+        "ecommerce-seo",
+        "google-shopping",
+        "cultural-profiles",
+        "content-parity",
+        "mcp-extensions",
+        "headless-rendering",
+        "ssrf-safe-fetchers",
+        "ai-citation-optimization",
+        "synthesis-framework",
+        "link-building",
+        "backlink-prospecting",
+        "directory-submission",
+        "guest-posts",
+        "seo-writing",
+        "linkedin",
+        "medium",
+        "wechat",
+        "blog-workflow",
+        "enterprise",
+        "agency",
+        "governance",
+        "audit-log",
+        "jira",
+        "portfolio-reporting"
+      ]
+    },
+    {
+      "name": "seo-cockpit",
+      "source": {
+        "source": "git-subdir",
+        "url": "AgriciDaniel/claude-seo",
+        "path": "plugins/seo-cockpit",
+        "ref": "seo-cockpit",
+        "sha": "cf97b4785f4241b9367d654c60c7207dc3afcf68"
+      },
+      "description": "Optional mods companion for claude-seo (needs Claude Code 2.1.287+). A spend guard that holds paid SEO API calls against the claude-seo budget, and zero-token /seo-spend and /seo-doctor commands.",
+      "author": {
+        "name": "AgriciDaniel",
+        "url": "https://github.com/AgriciDaniel"
+      },
+      "category": "marketing",
+      "homepage": "https://github.com/AgriciDaniel/claude-seo/tree/seo-cockpit/plugins/seo-cockpit",
+      "keywords": [
+        "seo",
+        "mods",
+        "cost-guard",
+        "dataforseo",
+        "budget"
+      ]
+    }
+  ]
+}

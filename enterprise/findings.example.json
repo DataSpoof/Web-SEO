@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "site": "example.com",
+  "client": "example-client",
+  "source": "web-seo /seo audit",
+  "generated_at": "2026-01-01T00:00:00+00:00",
+  "health_score": 72,
+  "findings": [
+    {
+      "id": "TECH-001",
+      "title": "Canonical tags point to non-indexable URLs",
+      "severity": "high",
+      "category": "technical",
+      "url": "https://example.com/products/",
+      "description": "12 product pages declare a canonical that returns 404.",
+      "recommendation": "Point each canonical at the live, indexable product URL.",
+      "evidence": "Crawl sample of 50 product URLs",
+      "verification": "URL Inspection shows the declared canonical selected by Google",
+      "effort": "S",
+      "owner": "",
+      "status": "open"
+    }
+  ]
+}

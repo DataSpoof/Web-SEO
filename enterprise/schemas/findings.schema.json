@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web-seo.local/schemas/findings.schema.json",
+  "title": "Web-SEO findings",
+  "type": "object",
+  "required": [
+    "site",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "site": {
+      "type": "string"
+    },
+    "client": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "health_score": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "severity"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string",
+            "description": "How we will know the fix worked"
+          },
+          "effort": {
+            "enum": [
+              "S",
+              "M",
+              "L",
+              ""
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "in_progress",
+              "fixed",
+              "wont_fix",
+              "accepted_risk"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

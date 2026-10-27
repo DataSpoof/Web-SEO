@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "slug": "example-client",
+  "name": "Example Client Inc",
+  "domains": [
+    "example.com",
+    "shop.example.com"
+  ],
+  "primary_domain": "example.com",
+  "competitors": [
+    "competitor.example"
+  ],
+  "markets": [
+    {
+      "country": "US",
+      "language": "en"
+    }
+  ],
+  "industry": "saas",
+  "brand": {
+    "display_name": "Example Client Inc",
+    "primary_color": "#1e3a5f",
+    "accent_color": "#b8860b",
+    "logo_url": ""
+  },
+  "contacts": {
+    "owner_alias": "account-lead",
+    "approver_aliases": [
+      "client-marketing-lead"
+    ]
+  },
+  "action_overrides": {
+    "outreach_email": "deny"
+  },
+  "allowed_actions": [],
+  "budgets": {
+    "monthly_api_usd": 150
+  },
+  "data_retention_days": 365,
+  "status": "active",
+  "created_at": "2026-01-01",
+  "notes": ""
+}

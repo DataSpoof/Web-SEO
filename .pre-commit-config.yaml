@@ -1,0 +1,37 @@
+# Web-SEO pre-commit hooks. Install once with:
+#   pip install pre-commit && pre-commit install
+# Pin revisions to full commit SHAs if your supply-chain policy requires it.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]
+      - id: detect-private-key
+        exclude: ^tests/
+      - id: end-of-file-fixer
+        files: \.(py|md|json|ya?ml)$
+        exclude: ^skills/seo-flow/references/prompts/
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: web-seo-consistency
+        name: Web-SEO reference and routing consistency
+        entry: python scripts/consistency_check.py
+        language: system
+        pass_filenames: false
+        files: ^(skills|agents|docs|scripts|extensions)/
+      - id: web-seo-enterprise-tests
+        name: Web-SEO enterprise layer tests
+        entry: python -m pytest tests/test_enterprise_layer.py -q
+        language: system
+        pass_filenames: false
+        files: ^(scripts/(audit_log|workspace|governance|findings_export|portfolio_rollup|schedule_plan)\.py|hooks/)
