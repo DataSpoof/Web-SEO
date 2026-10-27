@@ -188,7 +188,8 @@ def workspace_relative(workspace: Path, path: Path) -> str:
     resolved = path.resolve()
     if resolved == root or root not in resolved.parents:
         raise ValueError(f"handoff artifact must stay inside --workspace: {path}")
-    return str(resolved.relative_to(root))
+    # POSIX form on every OS: manifests compare against '/'-separated declarations.
+    return resolved.relative_to(root).as_posix()
 
 
 def artifact_record(workspace: Path, path: Path) -> dict[str, str]:
@@ -539,7 +540,7 @@ def build_handoff_manifest(
             "mode": review_mode,
         }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="")
 
 
 def ensure_body_preserves_cta(body: str, cta: dict[str, str]) -> None:
@@ -1083,9 +1084,9 @@ def main() -> int:
         )
     else:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(rendered, encoding="utf-8")
+        args.output.write_text(rendered, encoding="utf-8", newline="")
         markdown_output.parent.mkdir(parents=True, exist_ok=True)
-        markdown_output.write_text(rendered_markdown, encoding="utf-8")
+        markdown_output.write_text(rendered_markdown, encoding="utf-8", newline="")
     if args.handoff_manifest_output is not None:
         build_handoff_manifest(
             workspace=args.workspace,
@@ -1108,4 +1109,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    import sys as _sys
+    for _stream in (_sys.stdout, _sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

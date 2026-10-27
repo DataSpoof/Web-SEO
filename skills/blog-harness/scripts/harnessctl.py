@@ -2074,7 +2074,7 @@ def batch_public_qa_task_errors(
 
 
 def dump(path: Path, value: dict) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="")
 
 
 def sha256_file(path: Path) -> str:
@@ -2498,7 +2498,7 @@ def sync_prewrite_plan(workspace: Path) -> int:
     manifest_path = workspace / "prewrite-plan.json"
     report_path = workspace / "prewrite-plan.md"
     manifest_sha = sha256_file(manifest_path)
-    report_path.write_text(render_prewrite_plan_markdown(manifest, manifest_sha), encoding="utf-8")
+    report_path.write_text(render_prewrite_plan_markdown(manifest, manifest_sha), encoding="utf-8", newline="")
     report_sha = sha256_file(report_path)
     confirmed = status == "OWNER_PREWRITE_PLAN_CONFIRMED"
     receipt_confirmation_id = manifest.get("owner_confirmation_id") if confirmed else None
@@ -2551,7 +2551,7 @@ def sync_prewrite_plan(workspace: Path) -> int:
             owner_receipt=receipt if confirmed else None,
             scope_snapshot_sha256=scope_snapshot_sha,
         ),
-        encoding="utf-8",
+        encoding="utf-8", newline="",
     )
     requirements_path = workspace / "requirements-contract.md"
     existing_requirements = requirements_path.read_text(encoding="utf-8") if requirements_path.exists() else "# Requirements contract\n\n## Stable requirements\n\n"
@@ -2568,7 +2568,7 @@ def sync_prewrite_plan(workspace: Path) -> int:
                 scope_snapshot_sha256=scope_snapshot_sha,
             ),
         ),
-        encoding="utf-8",
+        encoding="utf-8", newline="",
     )
     dump(workspace / "campaign.json", cfg)
     dump(workspace / "state.json", st)
@@ -2761,7 +2761,7 @@ def render_prewrite_plan(manifest_path: Path, output: Path) -> int:
         print("PREWRITE_RENDER_FAILED\nmanifest must contain a JSON object")
         return 1
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(render_prewrite_plan_markdown(manifest, sha256_file(manifest_path)), encoding="utf-8")
+    output.write_text(render_prewrite_plan_markdown(manifest, sha256_file(manifest_path)), encoding="utf-8", newline="")
     print(f"PREWRITE_RENDERED: {output}")
     return 0
 
@@ -4204,7 +4204,7 @@ def init(workspace: Path, campaign_id: str) -> int:
         "Pre-write article IDs: PENDING\n"
         "<!-- BLOG_3P_PREWRITE_RECEIPT_END -->\n\n"
         "## Stable requirements\n\n",
-        encoding="utf-8",
+        encoding="utf-8", newline="",
     )
     dump(workspace / "prewrite-plan.json", {
         "schema_version": CURRENT_PREWRITE_PLAN_SCHEMA,
@@ -4240,7 +4240,7 @@ def init(workspace: Path, campaign_id: str) -> int:
         "- [ ] **用命令绑定确认。** 运行 `confirm-prewrite-plan`，再运行 `check` 与 `dispatch-readiness`。前者只绑定回执和哈希，后者明确列出仍缺的 REQ、G 登记或每篇平台／账号映射；`CHECK_PASSED` 本身只表示结构可读，不等于可派发。\n"
         "- [ ] **再启动每篇质量路线。** G 先写稳定 `REQ-*`，登记可见的项目 G；每篇默认只登记可见 W，在同一连续上下文完成调研、正文、三图、可视化富文本交付页和 `CANDIDATE_LOCK → ADVERSARIAL_SELF_QA → TARGETED_REPAIR → FINAL_BIND`。只有用户在已确认写前方案中明确选择 WR，才登记独立 R；WQ 的重大风险不得自动拉起 R。Git 工作区不是常规路径。\n"
         "- [ ] **保留读者页边界。** Google Trends 仅为可选英文全球相对背景；跨语言用语优先品牌站、地区 SERP、最后才有边界地模型翻译。平台编辑器 HTML 不能证明标题层级；人工回传 `HUMAN_ACCEPTED` URL 后，仅由同一 G 看公开读者页视觉。\n",
-        encoding="utf-8",
+        encoding="utf-8", newline="",
     )
     synced = sync_prewrite_plan(workspace)
     if synced != 0:
@@ -5541,7 +5541,7 @@ def summarize_efficiency(workspace: Path, output: Path | None) -> int:
         print("EFFICIENCY_SUMMARY_FAILED\noutput must stay inside the campaign workspace")
         return 1
     resolved_output.parent.mkdir(parents=True, exist_ok=True)
-    resolved_output.write_text(serialized, encoding="utf-8")
+    resolved_output.write_text(serialized, encoding="utf-8", newline="")
     print(f"EFFICIENCY_SUMMARY_WRITTEN: {relative_path(workspace, resolved_output)}")
     return 0
 
@@ -6110,4 +6110,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    for _stream in (sys.stdout, sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

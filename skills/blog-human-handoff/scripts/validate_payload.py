@@ -435,4 +435,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    import sys as _sys
+    for _stream in (_sys.stdout, _sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

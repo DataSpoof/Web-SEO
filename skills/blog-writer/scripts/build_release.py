@@ -70,7 +70,7 @@ def freeze(plan_path, receipt, source):
         "receipt_sha256": digest(receipt), "source": source,
         "meaning": "LOCAL_BINDING_ONLY_NOT_AUTHENTICATION_OR_QUALITY_APPROVAL",
     }
-    target.write_text(dump(record), encoding="utf-8")
+    target.write_text(dump(record), encoding="utf-8", newline="")
     return {"result": "CONFIRMATION_BOUND_NOT_AUTHENTICATED", "record": str(target)}
 
 
@@ -204,7 +204,7 @@ def build(plan_path, identifier, check=False, brief=False, verify_images=False, 
         raise ValueError("unsupported title transfer mode")
     with tempfile.TemporaryDirectory() as folder:
         metadata_path = Path(folder) / "metadata.json"
-        metadata_path.write_text(projection["metadata"], encoding="utf-8")
+        metadata_path.write_text(projection["metadata"], encoding="utf-8", newline="")
         html, markdown = C.render_payload_pair(
             title=projection["title"], body=projection["canonical"],
             image_items=visuals["assets"], metadata_path=metadata_path,
@@ -240,7 +240,7 @@ def build(plan_path, identifier, check=False, brief=False, verify_images=False, 
         for name, text in outputs.items():
             target = root / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(text, encoding="utf-8")
+            target.write_text(text, encoding="utf-8", newline="")
     return {
         "result": ("LOCAL_PREVIEW_NOT_QUALITY_APPROVED" if local_preview else
                    "MECHANICAL_CHECK_PASSED_NOT_QUALITY_APPROVAL" if check else "BUILT_NOT_QUALITY_APPROVED"),
@@ -290,4 +290,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    for _stream in (sys.stdout, sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

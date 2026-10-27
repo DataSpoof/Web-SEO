@@ -272,7 +272,7 @@ def prepare(workspace, article_id):
     import tempfile
     with tempfile.TemporaryDirectory() as temporary:
         metadata_path = Path(temporary) / "metadata.json"
-        metadata_path.write_text(expected["metadata"], encoding="utf-8")
+        metadata_path.write_text(expected["metadata"], encoding="utf-8", newline="")
         candidate_html, _ = compiler.render_payload_pair(
             title=expected["title"], body=expected["canonical"],
             image_items=json.loads(expected["visual_manifest"])["assets"],
@@ -286,7 +286,7 @@ def prepare(workspace, article_id):
     for relative, text in outputs.items():
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text, encoding="utf-8")
+        path.write_text(text, encoding="utf-8", newline="")
     article = context["frozen_article"]
     roles = {
         "metadata": "SINGLE_SOURCE_FOR_TITLE_AND_SEO_METADATA",
@@ -312,7 +312,7 @@ def prepare(workspace, article_id):
             if key in previous and previous.get("author_source") == package["author_source"] and previous.get("artifact_sources") == package["artifact_sources"]:
                 package[key] = previous[key]
     changed = changed or bool(previous and previous != package)
-    package_path.write_text(dump_text(package), encoding="utf-8")
+    package_path.write_text(dump_text(package), encoding="utf-8", newline="")
     compiler = load_module("blog_prepare_compiler", Path(__file__).with_name("build_visual_payload.py"))
     html, markdown = compiler.render_payload_pair(
         title=expected["title"], body=expected["canonical"],
@@ -321,8 +321,8 @@ def prepare(workspace, article_id):
         markdown_body=expected["markdown_body"],
     )
     (root / "handoff").mkdir(exist_ok=True)
-    (root / "handoff/visual-payload.html").write_text(html, encoding="utf-8")
-    (root / "handoff/visual-payload.md").write_text(markdown, encoding="utf-8")
+    (root / "handoff/visual-payload.html").write_text(html, encoding="utf-8", newline="")
+    (root / "handoff/visual-payload.md").write_text(markdown, encoding="utf-8", newline="")
     index_path = root / "reviews/review-index.json"
     if not index_path.exists():
         harness.build_review_index(workspace, context_path, index_path, None)
@@ -335,13 +335,13 @@ def prepare(workspace, article_id):
             for field in ("receipt_path", "receipt_sha256", "author_agent_id"):
                 receipt[field] = None
         index["canonical"] = {"path": harness.relative_path(workspace, root / "canonical/article.html"), "sha256": I.digest(root / "canonical/article.html")}
-        index_path.write_text(dump_text(index), encoding="utf-8")
+        index_path.write_text(dump_text(index), encoding="utf-8", newline="")
     trace = root / "requirements-traceability.md"
     trace.write_text(
         "# 自动生成的需求位置索引（不是质量结论）\n\n"
         "用户依据：context/article-contract.json；正文：canonical/article.md。\n"
         "CTA、语言、关键词与图片：上述稿件和同源发布页；发现的语义问题仍由质量角色记录。\n",
-        encoding="utf-8",
+        encoding="utf-8", newline="",
     )
     print("PREPARED_NOT_QUALITY_APPROVED")
     print("link_counts=" + json.dumps(expected["link_statistics"], ensure_ascii=False))
@@ -381,7 +381,7 @@ def bind_author_qa(workspace, article_id, agent_id, note):
     text = dump_text(receipt)
     receipt_name = "author-qa-" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:16] + ".json"
     receipt_path = root / "reviews" / receipt_name
-    receipt_path.write_text(text, encoding="utf-8")
+    receipt_path.write_text(text, encoding="utf-8", newline="")
     index["latest_author_qa"] = {
         **index.get("latest_author_qa", {}), **hashes,
         "status": "AUTHOR_QA_READY", "author_agent_id": agent_id,
@@ -391,7 +391,7 @@ def bind_author_qa(workspace, article_id, agent_id, note):
         "candidate_canonical_sha256": receipt["candidate_canonical_sha256"],
         "open_finding_ids": [],
     }
-    index_path.write_text(dump_text(index), encoding="utf-8")
+    index_path.write_text(dump_text(index), encoding="utf-8", newline="")
     errors = harness.review_index_errors(workspace, index_path, require_full_approved=True)
     if errors:
         raise ValueError("; ".join(errors))
@@ -436,4 +436,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    for _stream in (sys.stdout, sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

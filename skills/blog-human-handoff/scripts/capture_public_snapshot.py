@@ -361,10 +361,14 @@ def main() -> int:
     snapshot = observation(contract, source, html_source, receipt["public_visual_evidence_paths"])
     snapshot["snapshot_sha256"] = snapshot_hash(snapshot)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="")
     print(("PUBLIC_SNAPSHOT_CAPTURED" if html_source is not None else "PUBLIC_SNAPSHOT_UNVERIFIED") + f"\noutput={args.output}")
     return 0
 
 
 if __name__ == "__main__":
+    # Windows pipes default to cp1252; these tools print Chinese text and paths.
+    import sys as _sys
+    for _stream in (_sys.stdout, _sys.stderr):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())
